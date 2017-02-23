@@ -53,6 +53,7 @@ public class Metodos {
             for (int i = 0; i < jugador1.size(); i++) {//comparacion con el resto de la mano
                 if (aux.equals(jugador1.get(i))) {
                     jugador1.remove(i);
+                    jugador2.remove(aux);
                 }
             }
         }
@@ -63,8 +64,9 @@ public class Metodos {
         for (int j = 0; j < jugador2.size(); j++) {//carta a comparar
             aux = jugador1.get(j);
             for (int i = 0; i < jugador2.size(); i++) {//comparacion con el resto de la mano
-                if (jugador2.equals(jugador2.get(i))) {
+                if (aux.equals(jugador2.get(i))) {
                     jugador2.remove(i);
+                    jugador2.remove(aux);
                 }
             }
         }
