@@ -7,6 +7,7 @@ package exposicion;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,15 +30,16 @@ public class Metodos {
         }
     }
 
-    public void amosarManoJugador1() {
-        for (int i = 0; i < jugador1.size(); i++) {
-            System.out.println(jugador1.get(i));//Mano del jugador 1
-        }
-    }
-
-    public void amosarManoJugador2() {
-        for (int i = 0; i < jugador2.size(); i++) {
-            System.out.println(jugador2.get(i));//Mano del jugador 2
+    public void amosarManoJugador() {
+        int op = Integer.parseInt(JOptionPane.showInputDialog("jugador 1 o 2?"));
+        if (op == 1) {
+            for (int i = 0; i < jugador1.size(); i++) {
+                System.out.println(jugador1.get(i));//Mano del jugador 1
+            }
+        } else {
+            for (int i = 0; i < jugador2.size(); i++) {
+                System.out.println(jugador2.get(i));//Mano del jugador 2
+            }
         }
     }
 
@@ -46,44 +48,30 @@ public class Metodos {
         jugador2 = new ArrayList(baraja.subList(0, 0));
     }
 
-    public void pares() {
+    public void pares(List<Carta> jugador) {
         Object aux = null;
-        for (int j = 0; j < jugador1.size(); j++) {//carta a comparar
-            aux = jugador1.get(j);
-            for (int i = 0; i < jugador1.size(); i++) {//comparacion con el resto de la mano
-                if (aux.equals(jugador1.get(i))&&!(aux==jugador1.get(i))) {
-                    jugador1.remove(i);
-                    jugador2.remove(aux);
+        for (int j = 0; j < jugador.size(); j++) {//carta a comparar
+            aux = jugador.get(j);
+            for (int i = 0; i < jugador.size(); i++) {//comparacion con el resto de la mano
+                if (aux.equals(jugador.get(i)) && !(aux == jugador.get(i))) {
+                    jugador.remove(i);
+                    jugador.remove(aux);
                 }
             }
         }
     }
 
-    public void pares2() {
-        Object aux = null;
-        for (int j = 0; j < jugador2.size(); j++) {//carta a comparar
-            aux = jugador1.get(j);
-            for (int i = 0; i < jugador2.size(); i++) {//comparacion con el resto de la mano
-                if  (aux.equals(jugador1.get(i))&&!(aux==jugador1.get(i)))  {
-                    jugador2.remove(i);
-                    jugador2.remove(aux);
-                }
-            }
-        }
-    }
-
-    public void robar() {
-        int num = Integer.parseInt(JOptionPane.showInputDialog("Numero carta"));//elige posicion de la carta de la mano contraria
-        jugador1.add(jugador2.get(num - 1));// añade a tu mano la carta elegida 
-        jugador2.remove(num - 1);// elimina la carta en la mano contraria
-        pares();//realiza pares para comprobar si hay una pareja 
-    }
-
-    public void robar2() {
+    public void robar(int turno) {
         int num = Integer.parseInt(JOptionPane.showInputDialog("Numero carta"));
-        jugador2.add(jugador1.get(num));
-        jugador1.remove(num);
-        pares2();
+        if (turno == 1) {
+            jugador1.add(jugador2.get(num));
+            jugador2.remove(num);
+            pares(jugador1);
+        } else {
+            jugador2.add(jugador1.get(num));
+            jugador1.remove(num);
+            pares(jugador2);
+        }
     }
 
     public void ganador() {
@@ -96,8 +84,8 @@ public class Metodos {
 
     public void turnos() {
         do {
-            robar();
-            robar2();
+            robar(1);
+            robar(2);        
         } while (jugador1.isEmpty() == true || jugador2.isEmpty() == true);
     }
 }
