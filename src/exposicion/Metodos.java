@@ -7,9 +7,12 @@ package exposicion;
 
 import exposicion.objetos.Carta;
 import exposicion.objetos.Jugador;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +24,7 @@ public class Metodos {
     ArrayList<Carta> baraja = new ArrayList();//llenar con todas las cartas
     ArrayList<Carta> jugador1;
     ArrayList<Carta> jugador2;
+    Scanner sc;
 
     public void amosar() {
         for (int i = 0; i < baraja.size(); i++) {
@@ -90,5 +94,20 @@ public class Metodos {
 
     public String pedirNombre() {
         return JOptionPane.showInputDialog("Nombre?");
+    }
+    public void llenarBaraja(String nomFich){
+        String[] aux;
+     try {
+            sc = new Scanner(new File(nomFich));
+            while (sc.hasNextLine()) {
+                aux = sc.nextLine().split(",");
+                Carta cart = new Carta(Integer.parseInt(aux[0]), aux[1]);
+                baraja.add(cart);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            sc.close();
+        }
     }
 }

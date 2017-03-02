@@ -17,7 +17,8 @@ public class Exposicion {
     public static void main(String[] args) {
         // TODO code application logic here
         Metodos met = new Metodos();
-
+        met.llenarBaraja("");
+        met.cargarArray();
         met.turnos();
         met.ganador();
     }
