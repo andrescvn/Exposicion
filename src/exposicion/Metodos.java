@@ -33,7 +33,10 @@ public class Metodos {
     }
 
     public void amosarManoJugador() {
-        int op = Integer.parseInt(JOptionPane.showInputDialog("jugador 1 o 2?"));
+        int op;
+        do{
+        op = Integer.parseInt(JOptionPane.showInputDialog("jugador 1 o 2?"));
+        }while (op!=1||op!=2);
         if (op == 1) {
             for (int i = 0; i < jugador1.size(); i++) {
                 System.out.println(jugador1.get(i));//Mano del jugador 1
@@ -56,7 +59,7 @@ public class Metodos {
         for (int j = 0; j < jugador.size(); j++) {//carta a comparar
             aux = jugador.get(j);
             for (int i = 0; i < jugador.size(); i++) {//comparacion con el resto de la mano
-                if (aux.equals(jugador.get(i)) && !(aux == jugador.get(i))) {
+                if (aux.equals(jugador.get(i)) && !(aux == jugador.get(i))) {   
                     jugador.remove(i);
                     jugador.remove(aux);
                 }
@@ -64,18 +67,17 @@ public class Metodos {
         }
     }
 
-    public void robar(int turno) {
+    public void robar(ArrayList<Carta> lista,ArrayList<Carta> lista2) {
         int num = Integer.parseInt(JOptionPane.showInputDialog("Numero carta"));
-        if (turno == 1) {
-            jugador1.add(jugador2.get(num));
-            jugador2.remove(num);
-            pares(jugador1);
-        } else {
-            jugador2.add(jugador1.get(num));
-            jugador1.remove(num);
-            pares(jugador2);
+            try{
+            lista.add(lista2.get(num));
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+            }
+            lista.remove(num);
+            pares(lista);
         }
-    }
+    
 
     public void ganador() {
         if (jugador1.isEmpty() == true) {
@@ -87,8 +89,8 @@ public class Metodos {
 
     public void turnos() {
         do {
-            robar(1);
-            robar(2);
+            robar(jugador1,jugador2);     
+            robar(jugador2,jugador1);
         } while (jugador1.isEmpty() == true || jugador2.isEmpty() == true);
     }
 

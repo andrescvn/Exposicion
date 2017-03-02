@@ -18,6 +18,7 @@ public class Exposicion {
         // TODO code application logic here
         Metodos met = new Metodos();
         met.llenarBaraja("");
+        met.amosarManoJugador();
         met.cargarArray();
         met.turnos();
         met.ganador();
