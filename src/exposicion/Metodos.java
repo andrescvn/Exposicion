@@ -5,6 +5,8 @@
  */
 package exposicion;
 
+import exposicion.objetos.Carta;
+import exposicion.objetos.Jugador;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,10 +21,6 @@ public class Metodos {
     ArrayList<Carta> baraja = new ArrayList();//llenar con todas las cartas
     ArrayList<Carta> jugador1;
     ArrayList<Carta> jugador2;
-
-    public void barajar() {
-        Collections.shuffle(baraja);//desordena el array
-    }
 
     public void amosar() {
         for (int i = 0; i < baraja.size(); i++) {
@@ -44,8 +42,9 @@ public class Metodos {
     }
 
     public void cargarArray() {//se llenan los array de cada jugador con una porcion del array baraja
-        jugador1 = new ArrayList(baraja.subList(0, 0));// 0= posicion inicial y final en el array 
-        jugador2 = new ArrayList(baraja.subList(0, 0));
+        Collections.shuffle(baraja);
+        Jugador ju1 = new Jugador(pedirNombre(),jugador1 = new ArrayList(baraja.subList(0, 0)));// 0= posicion inicial y final en el array 
+        Jugador ju2 = new Jugador(pedirNombre(),jugador2 = new ArrayList(baraja.subList(0, 0)));
     }
 
     public void pares(List<Carta> jugador) {
@@ -85,7 +84,11 @@ public class Metodos {
     public void turnos() {
         do {
             robar(1);
-            robar(2);        
+            robar(2);
         } while (jugador1.isEmpty() == true || jugador2.isEmpty() == true);
+    }
+
+    public String pedirNombre() {
+        return JOptionPane.showInputDialog("Nombre?");
     }
 }
