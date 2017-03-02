@@ -47,8 +47,8 @@ public class Metodos {
 
     public void cargarArray() {//se llenan los array de cada jugador con una porcion del array baraja
         Collections.shuffle(baraja);
-        Jugador ju1 = new Jugador(pedirNombre(),jugador1 = new ArrayList(baraja.subList(0, 0)));// 0= posicion inicial y final en el array 
-        Jugador ju2 = new Jugador(pedirNombre(),jugador2 = new ArrayList(baraja.subList(0, 0)));
+        Jugador ju1 = new Jugador(pedirNombre(),jugador1 = new ArrayList(baraja.subList(0, 20)));// 0= posicion inicial y final en el array 
+        Jugador ju2 = new Jugador(pedirNombre(),jugador2 = new ArrayList(baraja.subList(21, 39)));
     }
 
     public void pares(List<Carta> jugador) {
