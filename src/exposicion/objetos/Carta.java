@@ -5,6 +5,8 @@
  */
 package exposicion.objetos;
 
+import java.util.Objects;
+
 /**
  *
  * @author acomesanavila
@@ -39,14 +41,7 @@ public class Carta {
 
     @Override
     public String toString() {
-        return "Carta{" + "numero=" + numero + ", palo=" + palo + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.numero;
-        return hash;
+        return numero+" "+ palo + "|";
     }
 
     @Override
@@ -61,10 +56,18 @@ public class Carta {
             return false;
         }
         final Carta other = (Carta) obj;
-        if (this.numero != other.numero) {
+        if (!Objects.equals(this.palo, other.palo)) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.palo);
+        return hash;
+    }
+
     
 }

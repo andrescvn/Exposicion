@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+import operacions.calculos;
 
 /**
  *
@@ -32,52 +33,42 @@ public class Metodos {
         }
     }
 
-    public void amosarManoJugador() {
-        int op;
-        do{
-        op = Integer.parseInt(JOptionPane.showInputDialog("jugador 1 o 2?"));
-        }while (op!=1||op!=2);
-        if (op == 1) {
-            for (int i = 0; i < jugador1.size(); i++) {
-                System.out.println(jugador1.get(i));//Mano del jugador 1
-            }
-        } else {
-            for (int i = 0; i < jugador2.size(); i++) {
-                System.out.println(jugador2.get(i));//Mano del jugador 2
-            }
+    public void amosarManoJugador(ArrayList<Carta> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(lista.get(i));//Mano del jugador 1
         }
     }
 
     public void cargarArray() {//se llenan los array de cada jugador con una porcion del array baraja
         Collections.shuffle(baraja);
-        Jugador ju1 = new Jugador(pedirNombre(),jugador1 = new ArrayList(baraja.subList(0, 20)));// 0= posicion inicial y final en el array 
-        Jugador ju2 = new Jugador(pedirNombre(),jugador2 = new ArrayList(baraja.subList(21, 39)));
+        Jugador ju1 = new Jugador(calculos.pedirString(), jugador1 = new ArrayList(baraja.subList(0, 20)));// 0= posicion inicial y final en el array 
+        Jugador ju2 = new Jugador(calculos.pedirString(), jugador2 = new ArrayList(baraja.subList(21, 39)));
     }
 
     public void pares(List<Carta> jugador) {
-        Object aux = null;
+        Carta aux = null;
         for (int j = 0; j < jugador.size(); j++) {//carta a comparar
             aux = jugador.get(j);
             for (int i = 0; i < jugador.size(); i++) {//comparacion con el resto de la mano
-                if (aux.equals(jugador.get(i)) && !(aux == jugador.get(i))) {   
+                if ( aux.getNumero()==jugador.get(i).getNumero()&& !(aux == jugador.get(i))) {
                     jugador.remove(i);
-                    jugador.remove(aux);
-                }
+                    jugador.remove(j);
+                        }                                    
             }
         }
     }
 
-    public void robar(ArrayList<Carta> lista,ArrayList<Carta> lista2) {
+
+    public void robar(ArrayList<Carta> lista, ArrayList<Carta> lista2) {
         int num = Integer.parseInt(JOptionPane.showInputDialog("Numero carta"));
-            try{
+        try {
             lista.add(lista2.get(num));
-            }catch(Exception ex){
-                System.out.println(ex.getMessage());
-            }
-            lista.remove(num);
-            pares(lista);
+        } catch (Exception ex) {
+            System.out.println("error:" + ex.getMessage());
         }
-    
+        lista.remove(num);
+        pares(lista);
+    }
 
     public void ganador() {
         if (jugador1.isEmpty() == true) {
@@ -89,17 +80,20 @@ public class Metodos {
 
     public void turnos() {
         do {
-            robar(jugador1,jugador2);     
-            robar(jugador2,jugador1);
-        } while (jugador1.isEmpty() == true || jugador2.isEmpty() == true);
+
+            robar(jugador1, jugador2);
+            amosarManoJugador(jugador1);
+            robar(jugador2, jugador1);
+            amosarManoJugador(jugador2);
+        } while (jugador1.isEmpty() == false || jugador2.isEmpty() == false);
+
     }
 
-    public String pedirNombre() {
-        return JOptionPane.showInputDialog("Nombre?");
-    }
-    public void llenarBaraja(String nomFich){
+
+
+    public void llenarBaraja(String nomFich) {
         String[] aux;
-     try {
+        try {
             sc = new Scanner(new File(nomFich));
             while (sc.hasNextLine()) {
                 aux = sc.nextLine().split(",");
@@ -112,4 +106,5 @@ public class Metodos {
             sc.close();
         }
     }
+    
 }
